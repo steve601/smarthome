@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home Device Efficiency</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .radio-group label {
+            margin-bottom: 0;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Smart Home Device Efficiency</h1>
+    <div class="container">
+        <form action='/analyse' method='POST'>
+            <div class="form-group">
+                <label for="device-type">Device Type</label>
+                <select id="device_type" name="device_type">
+                    <option value="Smart Speaker">Smart Speaker</option>
+                    <option value="Thermostat">Thermostat</option>
+                    <option value="Security System">Security System</option>
+                    <option value="Lights">Lights</option>
+                    <option value="Camera">Camera</option>
+                    <!-- Additional options can be added here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="usg(hrs)/day">Usage (hrs/day)</label>
+                <input type="number" id="usg(hrs)/day" name="usg(hrs)/day" step="0.1" value="{{ request.form['usg(hrs)/day'] if request.form else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="energy_consumption">Energy Consumption (kWh/day)</label>
+                <input type="number" id="energy_consumption" name="energy_consumption" step="0.1" value="{{ request.form.energy_consumption if request.form else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label>User Preference for Device</label>
+                <div class="radio-group">
+                    <input type="radio" id=1 name="user_preference" value=1>
+                    <label for="high">High</label>
+                    <input type="radio" id=0 name="user_preference" value=0>
+                    <label for="low">Low</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="malfuncti_incid">No. of Malfunction Incidents Reported</label>
+                <input type="number" id="malfuncti_incid" name="malfuncti_incid" step="1" value="{{ request.form.malfuncti_incid if request.form else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="device_age(m)">Device Age (months)</label>
+                <input type="number" id="device_age(m)" name="device_age(m)" step="1" value="{{ request.form['device_age(m)'] if request.form else '' }}" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Predict</button>
+            </div>
+        </form>
+        <div class="result">
+            <h3>{{ text }}</h3>
+        </div>
+    </div>
+
+</body>
+</html>
